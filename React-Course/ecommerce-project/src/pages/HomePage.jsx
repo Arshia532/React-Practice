@@ -3,6 +3,15 @@ import { products } from "../../starting-code/data/products";
 import "./Homepage.css";
 
 export function HomePage() {
+  fetch("http://localhost:3000/api/products")
+    
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+    });
+
   return (
     <>
       <title>Ecommerce Project</title>
@@ -11,15 +20,11 @@ export function HomePage() {
 
       <div className="home-page">
         <div className="products-grid">
-
           {products.map((product) => {
             return (
               <div key={product.id} className="product-container">
                 <div className="product-image-container">
-                  <img
-                    className="product-image"
-                    src= {product.image}
-                  />
+                  <img className="product-image" src={product.image} />
                 </div>
 
                 <div className="product-name limit-text-to-2-lines">
@@ -31,10 +36,14 @@ export function HomePage() {
                     className="product-rating-stars"
                     src={`images/ratings/rating-${product.rating.stars * 10}.png`}
                   />
-                  <div className="product-rating-count link-primary">{product.rating.count}</div>
+                  <div className="product-rating-count link-primary">
+                    {product.rating.count}
+                  </div>
                 </div>
 
-                <div className="product-price">{(product.priceCents / 100).toFixed(2)}</div>
+                <div className="product-price">
+                  {(product.priceCents / 100).toFixed(2)}
+                </div>
 
                 <div className="product-quantity-container">
                   <select>
