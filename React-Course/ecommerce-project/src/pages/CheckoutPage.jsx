@@ -8,7 +8,7 @@ import "./CheckoutPage.css";
 import { Link } from "react-router";
 
 export function CheckoutPage({ cart }) {
-  const [deliveryOption, setDeliveryOption] = useState();
+  const [deliveryOption, setDeliveryOption] = useState([]);
 
   useEffect(() => {
     axios
