@@ -1,9 +1,15 @@
-import { formatMoney } from '../../utils/money'
+import { formatMoney } from '../../utils/money';
+import axios from 'axios';
+import {useState} from 'react';
 
-export function ProductsGrid({ products }) {
+export function ProductsGrid({ products, loadCart }) {
+
   return (
     <div className="products-grid">
       {products.map((product) => {
+        const [quanitity, setQuantity] = useState(1)
+
+
         return (
           <div key={product.id} className="product-container">
             <div className="product-image-container">
@@ -29,7 +35,11 @@ export function ProductsGrid({ products }) {
             </div>
 
             <div className="product-quantity-container">
-              <select>
+              <select value={quanitity} onChange={(event) => {
+                const quanititySeleceted = Number(event.target.value); 
+                setQuantity(quanititySeleceted);
+                console.log(quanititySeleceted);
+              }}>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -50,7 +60,14 @@ export function ProductsGrid({ products }) {
               Added
             </div>
 
-            <button className="add-to-cart-button button-primary">
+            <button className="add-to-cart-button button-primary"
+              onClick={async () => {
+                await axios.post('/api/cart-items', {
+                  productId: product.id,
+                  quantity: 1
+                });
+                await loadCart();
+              }}>
               Add to Cart
             </button>
           </div>
